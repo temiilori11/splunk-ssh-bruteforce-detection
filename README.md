@@ -1,8 +1,6 @@
 SSH Brute-Force Detection Using Splunk  
 A Splunk-based investigation and detection project focused on identifying SSH brute-force activity through log analysis, SPL queries, and visual dashboards.
 
-This project was created by **Temitope Ilori** on **26th November 2025**.
-
 ---
 
 Project Overview
