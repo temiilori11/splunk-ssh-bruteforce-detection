@@ -18,7 +18,7 @@ The repository includes screenshots, SPL queries, and a full investigative repor
 
 ---
 
-Dashboards Created
+
 The following dashboards were built in **Splunk Classic**:
 
 ### **1. Total Failed Password Attempts**
