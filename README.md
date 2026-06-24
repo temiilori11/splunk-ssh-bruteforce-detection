@@ -56,3 +56,90 @@ A histogram displaying the distribution of failed attempts across attacking IP a
 ## SPL Queries Used
 
 ### Total Failed Attempts
+
+index=main "Failed password"
+
+| stats count
+
+### Top Attacking Source IPs
+
+index=main "Failed password"
+
+| rex "from\s(?<src_ip>\d+.\d+.\d+.\d+)"
+
+| stats count by src_ip
+
+| sort - count
+
+### Failed vs Successful Login Correlation
+
+index=main ("Failed password" OR "Accepted password")
+
+| rex "from\s(?<src_ip>\d+.\d+.\d+.\d+)"
+
+| stats count(eval(searchmatch("Failed password"))) as failed_attempts
+
+count(eval(searchmatch("Accepted password"))) as successful_logins
+
+by src_ip
+
+| where successful_logins > 0
+
+### Targeted Usernames
+
+index=main "Failed password"
+
+| rex "Failed password for (?<user>\w+)"
+
+| stats count by user
+
+| sort - count
+
+### Brute-Force Activity Over Time
+index=main "Failed password"
+
+| timechart span=1m count
+
+---
+
+## Repository Contents
+
+| File | Description |
+|------|-------------|
+| `SSH_Brute_Force_Report_Temitope_Ilori.docx` | Full investigation report |
+| `count.png` | Total failed password attempts (visual) |
+| `time.png` | Brute-force attempts timeline |
+| `Brute-Force Activity Over Time.png` | Timechart visual |
+| `Most-Targeted-User-Accounts.png` | Targeted username chart |
+| `Distribution-Of-Failed-Attempts-Per-Source-IP.png` | Histogram visual |
+| `README.md` | Documentation |
+
+---
+
+## Key Findings
+
+- Multiple IP addresses generated repeated failed SSH login attempts.
+- Attackers heavily targeted common accounts such as **admin**, **root**, **guest**, and **ubuntu**.
+- Some IPs recorded successful logins after multiple failures, indicating potential account compromise.
+- Attack patterns were consistent with automated brute-force attacks rather than manual attempts.
+
+---
+
+## Skills Demonstrated
+
+- SIEM log analysis
+- SPL query development
+- Threat hunting & detection
+- Dashboard creation in Splunk Classic
+- Authentication event analysis
+- Report writing
+- SOC-style investigation
+- GitHub documentation & project management
+
+---
+
+## Author
+
+**Temitope Ilori**  
+BSc Cybersecurity & Digital Forensics Student | TU Dublin  
+[GitHub](https://github.com/temiilori11) • [Portfolio](https://temiilori11.github.io)
