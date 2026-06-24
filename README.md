@@ -43,7 +43,7 @@ All dashboard screenshots are included in this repository.
 
 ---
 
-## 🧪 SPL Queries Used
+##  SPL Queries Used
 
 ### **Total Failed Attempts**
 ```spl
